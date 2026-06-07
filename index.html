@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucas Stanguerlin | Dev Web & App</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0c0b09;
+  --bg2:     #111009;
+  --card:    #161410;
+  --border:  rgba(210,165,80,0.15);
+  --gold:    #d2a550;
+  --gold2:   #e8c87a;
+  --ember:   #e05c2a;
+  --sage:    #7a9e7e;
+  --text:    #f0ead8;
+  --muted:   #7a7060;
+  --glow-g:  rgba(210,165,80,0.18);
+  --glow-e:  rgba(224,92,42,0.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+.cur{width:10px;height:10px;background:var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .25s,height .25s}
+.cur-r{width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.45;transition:width .3s,height .3s,opacity .3s}
+.cur.h{width:18px;height:18px}.cur-r.h{width:56px;height:56px;opacity:.7}
+
+/* GRAIN */
+body::before{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity:.5}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 52px;display:flex;align-items:center;justify-content:space-between;background:rgba(12,11,9,0.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Playfair Display',serif;font-style:italic;font-size:1.35rem;color:var(--gold2);letter-spacing:-.01em;line-height:1}
+.logo span{display:block;font-family:'Outfit',sans-serif;font-style:normal;font-size:.6rem;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.82rem;letter-spacing:.07em;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{border:1px solid var(--gold);color:var(--gold)!important;padding:8px 22px;font-size:.78rem!important;transition:background .3s!important}
+.nav-cta:hover{background:rgba(210,165,80,.1)!important}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 52px 80px;position:relative;z-index:2;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg-grad{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 70% 40%,rgba(210,165,80,.07) 0%,transparent 70%),radial-gradient(ellipse 50% 50% at 20% 80%,rgba(224,92,42,.06) 0%,transparent 60%)}
+.hero-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(210,165,80,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(210,165,80,.025) 1px,transparent 1px);background-size:80px 80px}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;position:relative;z-index:1}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:5px 16px;border-radius:100px;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:36px;animation:fu .8s ease both}
+.badge-dot{width:5px;height:5px;border-radius:50%;background:var(--sage);animation:blink 2.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(3.8rem,8.5vw,8rem);font-weight:900;line-height:.93;letter-spacing:-.02em;margin-bottom:30px;animation:fu .8s .08s ease both}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-title .alt{color:var(--ember)}
+.hero-sub{max-width:500px;color:var(--muted);font-size:1.05rem;line-height:1.75;font-weight:300;margin-bottom:52px;animation:fu .8s .16s ease both}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;animation:fu .8s .24s ease both}
+.btn-p{background:var(--gold);color:#0c0b09;font-family:'Outfit',sans-serif;font-weight:600;font-size:.9rem;padding:14px 34px;text-decoration:none;letter-spacing:.04em;transition:transform .2s,box-shadow .3s;display:inline-flex;align-items:center;gap:8px}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(210,165,80,.35)}
+.btn-g{border:1px solid var(--border);color:var(--text);font-family:'Outfit',sans-serif;font-weight:400;font-size:.9rem;padding:14px 34px;text-decoration:none;letter-spacing:.04em;transition:border-color .3s,background .3s;display:inline-flex;align-items:center;gap:8px}
+.btn-g:hover{border-color:var(--gold);background:rgba(210,165,80,.04)}
+.hero-stats{margin-top:88px;display:flex;gap:60px;animation:fu .8s .32s ease both;padding-top:48px;border-top:1px solid var(--border)}
+.stat-n{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--gold2)}
+.stat-l{font-size:.72rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+@keyframes fu{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* FLOATING ORB animation */
+.orb{position:absolute;border-radius:50%;pointer-events:none;animation:float 8s ease-in-out infinite}
+.orb1{width:320px;height:320px;background:radial-gradient(circle,rgba(210,165,80,.06),transparent 70%);right:-60px;top:15%;animation-delay:0s}
+.orb2{width:240px;height:240px;background:radial-gradient(circle,rgba(224,92,42,.05),transparent 70%);left:-40px;bottom:20%;animation-delay:-3s}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}}
+
+/* MARQUEE */
+.mq{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0;overflow:hidden;background:var(--bg2);position:relative;z-index:2}
+.mq-track{display:flex;gap:0;width:max-content;animation:mq 22s linear infinite}
+.mq-item{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);white-space:nowrap;padding:0 40px;display:flex;align-items:center;gap:40px}
+.mq-item::after{content:'◈';color:var(--ember);font-size:.5rem}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SERVICES */
+.services{padding:120px 52px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
+.services-inner{max-width:1200px;margin:0 auto}
+.sec-label{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ember);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.sec-label::before{content:'';width:28px;height:1px;background:var(--ember)}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.015em}
+.services-hdr{margin-bottom:72px}
+.services-hdr p{color:var(--muted);margin-top:20px;max-width:460px;font-size:.95rem;line-height:1.75;font-weight:300}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.srv-card{background:var(--card);padding:48px 36px;position:relative;overflow:hidden;transition:transform .3s;cursor:none}
+.srv-card::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(210,165,80,.04),transparent);opacity:0;transition:opacity .4s}
+.srv-card:hover{transform:translateY(-5px)}
+.srv-card:hover::after{opacity:1}
+.srv-num{font-family:'Playfair Display',serif;font-style:italic;font-size:.8rem;color:var(--gold);margin-bottom:28px;display:block}
+.srv-ico{width:50px;height:50px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:22px}
+.srv-t{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:14px}
+.srv-d{color:var(--muted);font-size:.88rem;line-height:1.75;font-weight:300}
+.srv-tags{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:.67rem;padding:3px 10px;border:1px solid var(--border);color:var(--muted);letter-spacing:.04em}
+
+/* PRICE TAG on service cards */
+.srv-price{margin-top:20px;display:inline-flex;align-items:center;gap:8px;background:rgba(210,165,80,.07);border:1px solid rgba(210,165,80,.2);padding:7px 14px}
+.srv-price-from{font-size:.6rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.srv-price-val{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--gold)}
+
+/* PORTFOLIO */
+.portfolio{padding:120px 52px;position:relative;z-index:2}
+.portfolio-inner{max-width:1200px;margin:0 auto}
+.port-hdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:72px;flex-wrap:wrap;gap:24px}
+.port-hdr p{color:var(--muted);max-width:360px;font-size:.9rem;line-height:1.75;font-weight:300}
+.port-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+
+/* PORTFOLIO CARD — sem sobreposição de texto sobre imagem */
+.port-card{border:1px solid var(--border);overflow:hidden;position:relative;cursor:none;transition:transform .4s,border-color .4s,box-shadow .4s;background:var(--card)}
+.port-card:hover{transform:translateY(-6px);border-color:rgba(210,165,80,.4);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.port-card.feat{grid-column:span 2}
+.port-prev{height:280px;position:relative;overflow:hidden}
+.port-card.feat .port-prev{height:360px}
+
+/* overlay apenas no hover, cobrindo só os extremos — sem texto em cima */
+.port-prev-inner{position:absolute;inset:0;transition:transform .6s cubic-bezier(.25,.46,.45,.94)}
+.port-card:hover .port-prev-inner{transform:scale(1.03)}
+
+/* INFO abaixo da imagem — texto sempre visível */
+.port-info{padding:20px 24px 0;border-top:1px solid var(--border)}
+.port-info-tags{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.port-info-tag{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ember);border:1px solid rgba(224,92,42,.25);padding:3px 10px}
+.port-info-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:5px;color:var(--text)}
+.port-info-desc{font-size:.82rem;color:var(--muted);line-height:1.6;font-weight:300;margin-bottom:14px}
+
+/* PRICE BADGE — destaque dourado */
+.port-price-badge{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(210,165,80,.12),rgba(210,165,80,.06));border:1px solid rgba(210,165,80,.35);padding:8px 16px;margin-bottom:6px}
+.port-price-badge .from{font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.port-price-badge .price{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--gold2)}
+.port-price-badge .arrow{font-size:.8rem;color:var(--gold);margin-left:4px;transition:transform .3s}
+.port-card:hover .port-price-badge .arrow{transform:translateX(4px)}
+
+.port-foot{padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.port-fn{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700}
+.port-ft{font-size:.72rem;color:var(--muted)}
+.port-arr{width:34px;height:34px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:background .3s,border-color .3s,color .3s;text-decoration:none;color:var(--text)}
+.port-card:hover .port-arr{background:var(--gold);border-color:var(--gold);color:#0c0b09}
+
+/* MOCK SITES */
+.m-eco{background:#fafaf8;height:100%;overflow:hidden;font-family:'Outfit',sans-serif;color:#1a1a1a}
+.m-eco-nav{background:#1c1c1c;height:44px;display:flex;align-items:center;padding:0 18px;justify-content:space-between}
+.m-eco-logo{font-size:13px;font-weight:700;color:#fff;letter-spacing:2px}
+.m-eco-nav-links{display:flex;gap:16px}
+.m-eco-nl{font-size:8px;color:rgba(255,255,255,.5)}
+.m-eco-hero{background:linear-gradient(135deg,#2d1a00 0%,#5c3810 100%);padding:28px 18px;position:relative;overflow:hidden}
+.m-eco-hero-bg{position:absolute;inset:0;background:radial-gradient(circle at 80% 50%,rgba(210,140,40,.25),transparent)}
+.m-eco-tag{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,210,120,.8);margin-bottom:8px;position:relative}
+.m-eco-h2{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;position:relative;line-height:1.1}
+.m-eco-p{font-size:9px;color:rgba(255,255,255,.65);margin-bottom:14px;position:relative}
+.m-eco-btn{background:#d4a843;color:#1c1000;font-size:8px;font-weight:700;padding:6px 16px;display:inline-block;position:relative;letter-spacing:1px}
+.m-eco-prods{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px}
+.m-eco-prod{background:#f5f3ef;padding:10px}
+.m-eco-img{height:48px;border-radius:2px;margin-bottom:7px}
+.m-eco-pn{font-size:7.5px;font-weight:600;color:#333;margin-bottom:3px}
+.m-eco-pr{font-size:9px;font-weight:700;color:#c47e20}
+
+.m-rest{background:#0a0704;height:100%;overflow:hidden}
+.m-rest-img{height:120px;position:relative;overflow:hidden}
+.m-rest-img-bg{position:absolute;inset:0;background:linear-gradient(160deg,#3d1400,#7a3000)}
+.m-rest-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,7,4,0) 30%,#0a0704 100%)}
+.m-rest-top{position:absolute;top:0;left:0;right:0;padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
+.m-rest-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:#d4a843}
+.m-rest-reserve{font-size:7px;color:rgba(212,168,67,.7);border:1px solid rgba(212,168,67,.3);padding:3px 8px}
+.m-rest-body{padding:0 16px 16px}
+.m-rest-lbl{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:#7a6040;margin-bottom:6px}
+.m-rest-h{font-size:20px;font-weight:800;color:#f0e0c0;line-height:1.1;margin-bottom:12px}
+.m-rest-menu{display:flex;flex-direction:column;gap:6px}
+.m-rest-item{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.03);border:1px solid rgba(212,168,67,.08)}
+.m-rest-in{font-size:8px;color:#c8b090;font-weight:600}
+.m-rest-ip{font-size:9px;color:#d4a843;font-weight:700}
+
+.m-saas{background:#08060f;height:100%;overflow:hidden}
+.m-saas-nav{padding:11px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.05)}
+.m-saas-logo{width:20px;height:20px;background:linear-gradient(135deg,#a855f7,#ec4899);border-radius:5px}
+.m-saas-lt{font-size:10px;font-weight:700;color:#fff}
+.m-saas-nav-r{display:flex;gap:12px;margin-left:auto}
+.m-saas-nl{font-size:7.5px;color:#4b4070}
+.m-saas-hero{padding:22px 16px;text-align:center}
+.m-saas-badge{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);color:#c084fc;font-size:7px;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:11px;letter-spacing:1px}
+.m-saas-h{font-size:19px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:7px}
+.m-saas-h span{background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.m-saas-p{font-size:7.5px;color:#4b4070;margin-bottom:13px;line-height:1.5}
+.m-saas-btns{display:flex;gap:8px;justify-content:center;margin-bottom:18px}
+.m-saas-b1{background:linear-gradient(135deg,#a855f7,#ec4899);color:#fff;font-size:7.5px;font-weight:600;padding:5px 12px;border-radius:4px}
+.m-saas-b2{border:1px solid rgba(255,255,255,.08);color:#6b7280;font-size:7.5px;padding:5px 12px;border-radius:4px}
+.m-saas-dash{margin:0 10px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:10px}
+.m-saas-row{display:flex;gap:6px}
+.m-saas-box{flex:1;background:rgba(255,255,255,.03);border-radius:5px;padding:8px}
+.m-saas-bv{font-size:13px;font-weight:800;color:#fff;margin-bottom:3px}
+.m-saas-bl{font-size:6.5px;color:#4b4070}
+
+.m-land{background:#f7f5f0;height:100%;overflow:hidden;font-family:'Outfit',sans-serif;color:#1a1a1a}
+.m-land-nav{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #ece8e0}
+.m-land-logo{font-size:11px;font-weight:800;color:#1a1a1a;letter-spacing:-0.5px}
+.m-land-cta{background:#1a1a1a;color:#fff;font-size:7px;padding:4px 10px;font-weight:600;letter-spacing:.5px}
+.m-land-hero{padding:22px 16px;background:linear-gradient(160deg,#1a1a1a 0%,#2d2d2d 100%);color:#fff}
+.m-land-lbl{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:#888;margin-bottom:8px}
+.m-land-h{font-size:20px;font-weight:900;line-height:1.05;margin-bottom:10px}
+.m-land-h em{font-style:italic;color:#d4a843}
+.m-land-p{font-size:8px;color:#999;margin-bottom:14px;line-height:1.5}
+.m-land-form{display:flex;gap:6px}
+.m-land-inp{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:6px 10px;font-size:7.5px;color:#fff}
+.m-land-sub{background:#d4a843;color:#1a1a1a;font-size:7.5px;font-weight:700;padding:6px 12px;white-space:nowrap}
+.m-land-trust{padding:12px 16px;display:flex;gap:16px;background:#fff;border-top:1px solid #ece8e0}
+.m-land-ti{display:flex;align-items:center;gap:6px}
+.m-land-tico{font-size:13px}
+.m-land-tt{font-size:7.5px;color:#888;font-weight:500}
+
+/* APPS */
+.apps{padding:120px 52px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
+.apps-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.phones{display:flex;gap:18px;align-items:flex-end;justify-content:center}
+.phone{width:176px;border-radius:30px;border:1.5px solid rgba(255,255,255,.08);background:#0a0907;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.7)}
+.phone.tall{margin-bottom:36px}
+.notch{height:26px;background:#050403;display:flex;align-items:center;justify-content:center}
+.notch-d{width:58px;height:7px;background:#0f0e0b;border-radius:100px}
+.app-s{padding:12px}
+.app-fit{background:linear-gradient(160deg,#120a02,#1f1105);min-height:300px}
+.af-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.af-gr{font-size:8px;color:#7a5030}
+.af-nm{font-size:13px;font-weight:700;color:#f0ddb0}
+.af-ring{width:82px;height:82px;background:conic-gradient(#d2a550 0deg,#d2a550 238deg,rgba(255,255,255,.04) 238deg);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.af-ri{width:62px;height:62px;background:#120a02;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.af-pct{font-size:15px;font-weight:800;color:#f0ddb0}
+.af-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.af-st{background:rgba(255,255,255,.03);border:1px solid rgba(210,165,80,.1);border-radius:6px;padding:8px}
+.af-sv{font-size:11px;font-weight:700;color:#d2a550}
+.af-sl{font-size:6.5px;color:#7a5030}
+.app-del{background:#fff;min-height:260px}
+.ad-map{background:linear-gradient(135deg,#e8f0e8,#d4e8d4);height:90px;border-radius:8px;margin-bottom:10px;position:relative;overflow:hidden}
+.ad-pin1{position:absolute;top:25%;left:30%;width:9px;height:9px;background:#7a9e7e;border-radius:50%;border:2px solid #fff}
+.ad-pin2{position:absolute;bottom:25%;right:30%;width:9px;height:9px;background:#d2a550;border-radius:50%;border:2px solid #fff}
+.ad-status{font-size:7px;color:#7a9e7e;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.ad-title{font-size:12px;font-weight:800;color:#1a1a1a;margin-bottom:8px}
+.ad-items{display:flex;gap:6px;margin-bottom:8px}
+.ad-i{flex:1;background:#f5f3ef;border-radius:5px;padding:6px;text-align:center}
+.ad-ie{font-size:14px;margin-bottom:2px}
+.ad-in{font-size:6.5px;color:#888;font-weight:600}
+.ad-btn{background:#7a9e7e;color:#fff;font-size:8.5px;font-weight:700;padding:8px;border-radius:6px;text-align:center;letter-spacing:.5px}
+.apps-content h2{font-family:'Playfair Display',serif;font-size:2.7rem;font-weight:700;letter-spacing:-.015em;line-height:1.1;margin:18px 0}
+.apps-content h2 em{font-style:italic;color:var(--gold)}
+.apps-content p{color:var(--muted);font-size:.95rem;line-height:1.75;font-weight:300;margin-bottom:40px}
+.tech-pills{display:flex;flex-wrap:wrap;gap:10px}
+.tp{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);padding:8px 16px;font-size:.8rem;color:var(--muted);transition:border-color .3s,color .3s}
+.tp:hover{border-color:var(--gold);color:var(--text)}
+.tp-dot{width:5px;height:5px;border-radius:50%}
+
+/* ══════════════════════════════════════════
+   DEPOIMENTOS
+══════════════════════════════════════════ */
+.depoimentos{padding:120px 52px;background:var(--bg);position:relative;z-index:2;overflow:hidden}
+.depoimentos::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(210,165,80,.04),transparent);pointer-events:none}
+.dep-inner{max-width:1200px;margin:0 auto}
+.dep-hdr{text-align:center;margin-bottom:72px}
+.dep-hdr .sec-label{justify-content:center}
+.dep-hdr .sec-label::before{display:none}
+.dep-hdr .sec-title{margin-top:14px}
+.dep-hdr p{color:var(--muted);font-size:.95rem;margin-top:14px;font-weight:300}
+.dep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.dep-card{background:var(--card);border:1px solid var(--border);padding:36px 32px;position:relative;transition:border-color .4s,transform .4s;overflow:hidden}
+.dep-card::before{content:'"';position:absolute;top:-10px;right:20px;font-family:'Playfair Display',serif;font-size:8rem;color:rgba(210,165,80,.06);line-height:1;pointer-events:none}
+.dep-card:hover{border-color:rgba(210,165,80,.35);transform:translateY(-4px)}
+.dep-stars{display:flex;gap:4px;margin-bottom:20px}
+.dep-stars span{color:var(--gold);font-size:.85rem}
+.dep-text{font-size:.92rem;line-height:1.8;color:var(--text);font-weight:300;margin-bottom:28px;font-style:italic}
+.dep-text strong{color:var(--gold2);font-style:normal;font-weight:600}
+.dep-author{display:flex;align-items:center;gap:14px;border-top:1px solid var(--border);padding-top:20px}
+.dep-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;border:1px solid var(--border)}
+.dep-name{font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem}
+.dep-role{font-size:.7rem;color:var(--muted);margin-top:2px}
+.dep-project{font-size:.65rem;color:var(--ember);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+/* featured depo */
+.dep-card.feat-dep{border-color:rgba(210,165,80,.25);background:linear-gradient(135deg,rgba(210,165,80,.05),var(--card))}
+
+/* COUNTER STRIP */
+.counter-strip{padding:60px 52px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
+.counter-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+.counter-item{text-align:center;padding:28px;border:1px solid var(--border);position:relative;overflow:hidden;transition:border-color .4s}
+.counter-item:hover{border-color:rgba(210,165,80,.35)}
+.counter-item::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .5s}
+.counter-item:hover::before{transform:scaleX(1)}
+.counter-n{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;color:var(--gold2);line-height:1}
+.counter-l{font-size:.7rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:6px}
+
+/* CONTACT */
+.contact{padding:120px 52px;position:relative;z-index:2}
+.contact-inner{max-width:1200px;margin:0 auto}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.contact-left h2{font-family:'Playfair Display',serif;font-size:2.9rem;font-weight:700;line-height:1.1;letter-spacing:-.015em;margin:18px 0 22px}
+.contact-left h2 em{font-style:italic;color:var(--gold)}
+.contact-left p{color:var(--muted);font-size:.95rem;line-height:1.75;font-weight:300;margin-bottom:48px}
+.clinks{display:flex;flex-direction:column;gap:14px}
+.clink{display:flex;align-items:center;gap:20px;padding:18px 22px;border:1px solid var(--border);background:var(--card);text-decoration:none;color:var(--text);transition:border-color .3s,transform .3s}
+.clink:hover{border-color:rgba(210,165,80,.4);transform:translateX(6px)}
+.clink-ico{width:46px;height:46px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);font-size:1.3rem;flex-shrink:0}
+.clink-lbl{font-size:.7rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.clink-val{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem}
+.contact-right{background:var(--card);border:1px solid var(--border);padding:44px;position:relative;overflow:hidden}
+.contact-right::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--ember),var(--sage))}
+.contact-right h3{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;margin-bottom:30px}
+.fg{margin-bottom:18px}
+.fg label{display:block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.fg input,.fg textarea,.fg select{width:100%;background:rgba(255,255,255,.02);border:1px solid var(--border);color:var(--text);font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:300;padding:11px 14px;outline:none;transition:border-color .3s;-webkit-appearance:none}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--gold)}
+.fg select option{background:var(--bg)}
+.fg textarea{height:110px;resize:none}
+.fsub{width:100%;background:var(--gold);border:none;color:#0c0b09;font-family:'Outfit',sans-serif;font-weight:600;font-size:.9rem;padding:13px;cursor:pointer;letter-spacing:.05em;transition:transform .2s,box-shadow .3s}
+.fsub:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(210,165,80,.35)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:38px 52px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2;flex-wrap:wrap;gap:18px}
+footer .logo{font-size:1.1rem}
+footer p{color:var(--muted);font-size:.78rem}
+.fl{display:flex;gap:22px}
+.fl a{color:var(--muted);text-decoration:none;font-size:.78rem;transition:color .3s}
+.fl a:hover{color:var(--gold)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .65s ease,transform .65s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* PULSE ANIMATION on price badge */
+@keyframes pulseBorder{0%,100%{box-shadow:0 0 0 0 rgba(210,165,80,.3)}50%{box-shadow:0 0 0 6px rgba(210,165,80,0)}}
+.port-price-badge{animation:pulseBorder 3s ease infinite}
+
+/* HAMBURGER */
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;z-index:200;background:none;border:none}
+.ham span{display:block;width:24px;height:2px;background:var(--gold);transition:transform .3s,opacity .3s}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mob-menu{display:none;position:fixed;inset:0;background:rgba(12,11,9,.97);z-index:150;flex-direction:column;align-items:center;justify-content:center;gap:40px;backdrop-filter:blur(20px)}
+.mob-menu.open{display:flex}
+.mob-menu a{font-family:'Playfair Display',serif;font-size:2rem;font-style:italic;color:var(--text);text-decoration:none;transition:color .2s}
+.mob-menu a:hover{color:var(--gold)}
+.mob-menu .mob-cta{font-size:1rem!important;font-style:normal!important;font-family:'Outfit',sans-serif!important;border:1px solid var(--gold);color:var(--gold)!important;padding:12px 32px;margin-top:10px}
+
+/* TABLET */
+@media(max-width:1024px){
+  nav{padding:18px 32px}
+  .hero{padding:110px 32px 70px}
+  .services,.portfolio,.apps,.contact,.depoimentos{padding-left:32px;padding-right:32px}
+  .counter-strip{padding:48px 32px}
+  footer{padding:32px 32px}
+  .apps-inner{gap:48px}
+  .contact-grid{gap:48px}
+  .dep-grid{grid-template-columns:repeat(2,1fr)}
+  .counter-inner{grid-template-columns:repeat(2,1fr)}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  body{cursor:auto}
+  .cur,.cur-r{display:none!important}
+  nav{padding:16px 20px}
+  .nav-links{display:none}
+  .ham{display:flex}
+  .hero{padding:100px 20px 60px;min-height:100svh;align-items:flex-start}
+  .hero-title{font-size:clamp(2.8rem,13vw,4.5rem);line-height:.96}
+  .hero-sub{font-size:.95rem;margin-bottom:36px;max-width:100%}
+  .badge{font-size:.62rem;padding:4px 13px;margin-bottom:24px}
+  .hero-actions{flex-direction:column;gap:12px}
+  .btn-p,.btn-g{width:100%;justify-content:center;padding:15px 24px;font-size:.95rem}
+  .hero-stats{margin-top:52px;padding-top:32px;gap:0;justify-content:space-between}
+  .hero-stats>div{flex:1;text-align:center;padding:0 8px}
+  .stat-n{font-size:1.9rem}
+  .stat-l{font-size:.62rem}
+  .mq{padding:14px 0}
+  .mq-item{font-size:.62rem;padding:0 28px;gap:28px}
+  .services{padding:72px 20px}
+  .services-hdr{margin-bottom:44px}
+  .srv-grid{grid-template-columns:1fr;gap:1px}
+  .srv-card{padding:32px 24px}
+  .sec-title{font-size:clamp(1.7rem,7vw,2.4rem)}
+  .portfolio{padding:72px 20px}
+  .port-hdr{flex-direction:column;align-items:flex-start;margin-bottom:44px;gap:16px}
+  .port-hdr p{max-width:100%}
+  .port-grid{grid-template-columns:1fr;gap:16px}
+  .port-card.feat{grid-column:span 1}
+  .port-prev{height:200px}
+  .port-card.feat .port-prev{height:240px}
+  .apps{padding:72px 20px}
+  .apps-inner{grid-template-columns:1fr;gap:48px}
+  .phones{order:2;gap:14px;transform:scale(.88);transform-origin:top center}
+  .phone{width:155px}
+  .apps-content{order:1}
+  .apps-content h2{font-size:2rem}
+  .depoimentos{padding:72px 20px}
+  .dep-grid{grid-template-columns:1fr}
+  .counter-strip{padding:48px 20px}
+  .counter-inner{grid-template-columns:repeat(2,1fr);gap:16px}
+  .counter-n{font-size:2rem}
+  .contact{padding:72px 20px}
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+  .contact-left h2{font-size:2.1rem}
+  .contact-left p{margin-bottom:32px}
+  .contact-right{padding:28px 20px}
+  .fsub{font-size:.95rem;padding:15px}
+  footer{padding:28px 20px;flex-direction:column;align-items:flex-start;gap:16px}
+  footer p{order:3}
+  .fl{order:2}
+}
+@media(max-width:400px){
+  .hero-title{font-size:2.6rem}
+  .phones{transform:scale(.78);transform-origin:top center}
+  .hero-stats>div{padding:0 4px}
+  .stat-n{font-size:1.6rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-r" id="curR"></div>
+
+<nav>
+  <div class="logo">Lucas Stanguerlin<span>Dev Web & App</span></div>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#depoimentos">Clientes</a></li>
+    <li><a href="#apps">Apps</a></li>
+    <li><a href="#contato" class="nav-cta">Contratar</a></li>
+  </ul>
+  <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <a href="#servicos" onclick="closeMob()">Serviços</a>
+  <a href="#portfolio" onclick="closeMob()">Portfólio</a>
+  <a href="#depoimentos" onclick="closeMob()">Clientes</a>
+  <a href="#apps" onclick="closeMob()">Apps</a>
+  <a href="#contato" class="mob-cta" onclick="closeMob()">Contratar</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-grad"></div>
+    <div class="hero-lines"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="badge"><span class="badge-dot"></span>Disponível para novos projetos</div>
+    <h1 class="hero-title">
+      Criando<br>
+      <em>Experiências</em><br>
+      <span class="alt">Digitais</span>
+    </h1>
+    <p class="hero-sub">Sites, lojas virtuais e aplicativos com design de impacto e tecnologia que converte visitantes em clientes.</p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-p">Ver Projetos ↓</a>
+      <a href="#contato" class="btn-g">Solicitar Orçamento</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n" data-target="50">0</div><div class="stat-l">Projetos entregues</div></div>
+      <div><div class="stat-n" data-target="3">0</div><div class="stat-l">Anos de experiência</div></div>
+      <div><div class="stat-n">100%</div><div class="stat-l">Dedicação</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="mq">
+  <div class="mq-track">
+    <span class="mq-item">Sites Profissionais</span><span class="mq-item">E-Commerce</span><span class="mq-item">Apps Android & iOS</span><span class="mq-item">Landing Pages</span><span class="mq-item">Sistemas Web</span><span class="mq-item">UI / UX Design</span><span class="mq-item">Sites Profissionais</span><span class="mq-item">E-Commerce</span><span class="mq-item">Apps Android & iOS</span><span class="mq-item">Landing Pages</span><span class="mq-item">Sistemas Web</span><span class="mq-item">UI / UX Design</span><span class="mq-item">Sites Profissionais</span><span class="mq-item">E-Commerce</span><span class="mq-item">Apps Android & iOS</span><span class="mq-item">Landing Pages</span><span class="mq-item">Sistemas Web</span><span class="mq-item">UI / UX Design</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="servicos">
+  <div class="services-inner">
+    <div class="services-hdr rv">
+      <div class="sec-label">O que eu faço</div>
+      <h2 class="sec-title">Soluções completas,<br>do zero ao lançamento</h2>
+      <p>Cuido de tudo: design, desenvolvimento e entrega. Você foca no negócio, eu cuido da sua presença digital.</p>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-card rv">
+        <span class="srv-num">01</span>
+        <div class="srv-ico">🌐</div>
+        <h3 class="srv-t">Sites Profissionais</h3>
+        <p class="srv-d">Landing pages de alta conversão, sites institucionais e portfólios com design único e animações impactantes.</p>
+        <div class="srv-price"><span class="srv-price-from">a partir de</span><span class="srv-price-val">R$ 1.200</span></div>
+        <div class="srv-tags"><span class="tag">HTML/CSS</span><span class="tag">React</span><span class="tag">WordPress</span><span class="tag">Next.js</span></div>
+      </div>
+      <div class="srv-card rv d1">
+        <span class="srv-num">02</span>
+        <div class="srv-ico">🛒</div>
+        <h3 class="srv-t">E-Commerce</h3>
+        <p class="srv-d">Lojas virtuais completas com painel administrativo, integração de pagamentos e gestão de estoque.</p>
+        <div class="srv-price"><span class="srv-price-from">a partir de</span><span class="srv-price-val">R$ 2.500</span></div>
+        <div class="srv-tags"><span class="tag">WooCommerce</span><span class="tag">Shopify</span><span class="tag">Custom</span></div>
+      </div>
+      <div class="srv-card rv d2">
+        <span class="srv-num">03</span>
+        <div class="srv-ico">📱</div>
+        <h3 class="srv-t">Apps Mobile</h3>
+        <p class="srv-d">Aplicativos para Android e iOS com UI moderna, performance otimizada e publicação nas lojas.</p>
+        <div class="srv-price"><span class="srv-price-from">a partir de</span><span class="srv-price-val">R$ 3.800</span></div>
+        <div class="srv-tags"><span class="tag">React Native</span><span class="tag">Flutter</span><span class="tag">Android</span><span class="tag">iOS</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-inner">
+    <div class="port-hdr">
+      <div>
+        <div class="sec-label rv">Trabalhos em destaque</div>
+        <h2 class="sec-title rv">Modelos de sites<br>que desenvolvo</h2>
+      </div>
+      <p class="rv">Cada projeto é construído do zero com foco em resultados e experiência do usuário.</p>
+    </div>
+    <div class="port-grid">
+
+      <!-- E-COMMERCE (featured) -->
+      <div class="port-card feat rv">
+        <div class="port-prev">
+          <div class="port-prev-inner">
+            <div class="m-eco">
+              <div class="m-eco-nav"><div class="m-eco-logo">MAISON STORE</div><div class="m-eco-nav-links"><div class="m-eco-nl">Novo</div><div class="m-eco-nl">Sale</div><div class="m-eco-nl">Sobre</div></div></div>
+              <div class="m-eco-hero">
+                <div class="m-eco-hero-bg"></div>
+                <div class="m-eco-tag">Nova Coleção 2025</div>
+                <div class="m-eco-h2">Estilo que<br>transforma</div>
+                <div class="m-eco-p">Peças exclusivas com entrega em todo Brasil</div>
+                <div class="m-eco-btn">COMPRAR AGORA →</div>
+              </div>
+              <div class="m-eco-prods">
+                <div class="m-eco-prod"><div class="m-eco-img" style="background:linear-gradient(135deg,#d4b896,#b8956e)"></div><div class="m-eco-pn">Blazer Clássico</div><div class="m-eco-pr">R$ 349</div></div>
+                <div class="m-eco-prod"><div class="m-eco-img" style="background:linear-gradient(135deg,#8a9e8a,#6a7e6a)"></div><div class="m-eco-pn">Calça Slim</div><div class="m-eco-pr">R$ 199</div></div>
+                <div class="m-eco-prod"><div class="m-eco-img" style="background:linear-gradient(135deg,#c4a882,#a08860)"></div><div class="m-eco-pn">Sapato Oxford</div><div class="m-eco-pr">R$ 289</div></div>
+                <div class="m-eco-prod"><div class="m-eco-img" style="background:linear-gradient(135deg,#2d2d2d,#1a1a1a)"></div><div class="m-eco-pn">Cinto Premium</div><div class="m-eco-pr">R$ 119</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="port-info">
+          <div class="port-info-tags"><span class="port-info-tag">E-Commerce</span><span class="port-info-tag">WooCommerce</span></div>
+          <div class="port-info-title">Loja Virtual Completa</div>
+          <div class="port-info-desc">Catálogo, carrinho, pagamentos e painel admin — tudo integrado e pronto para vender.</div>
+          <div class="port-price-badge"><span class="from">Projeto a partir de</span><span class="price">R$ 2.500</span><span class="arrow">→</span></div>
+        </div>
+        <div class="port-foot"><div><div class="port-fn">E-Commerce Premium</div><div class="port-ft">Loja Virtual • WooCommerce / Custom</div></div><a href="#contato" class="port-arr">→</a></div>
+      </div>
+
+      <!-- RESTAURANT -->
+      <div class="port-card rv">
+        <div class="port-prev">
+          <div class="port-prev-inner">
+            <div class="m-rest">
+              <div class="m-rest-img">
+                <div class="m-rest-img-bg"></div>
+                <div class="m-rest-img-overlay"></div>
+                <div class="m-rest-top">
+                  <div class="m-rest-logo">Bella Roma</div>
+                  <div class="m-rest-reserve">Reservar</div>
+                </div>
+              </div>
+              <div class="m-rest-body">
+                <div class="m-rest-lbl">Culinária Italiana</div>
+                <div class="m-rest-h">Uma experiência<br>inesquecível</div>
+                <div class="m-rest-menu">
+                  <div class="m-rest-item"><div class="m-rest-in">Carbonara della Casa</div><div class="m-rest-ip">R$ 52</div></div>
+                  <div class="m-rest-item"><div class="m-rest-in">Fettuccine al Tartufo</div><div class="m-rest-ip">R$ 58</div></div>
+                  <div class="m-rest-item"><div class="m-rest-in">Tiramisu Originale</div><div class="m-rest-ip">R$ 28</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="port-info">
+          <div class="port-info-tags"><span class="port-info-tag">Gastronomia</span></div>
+          <div class="port-info-title">Site para Restaurante</div>
+          <div class="port-info-desc">Cardápio online, reservas e vitrine do espaço.</div>
+          <div class="port-price-badge"><span class="from">a partir de</span><span class="price">R$ 1.500</span><span class="arrow">→</span></div>
+        </div>
+        <div class="port-foot"><div><div class="port-fn">Restaurante Premium</div><div class="port-ft">Gastronomia • Cardápio Online</div></div><a href="#contato" class="port-arr">→</a></div>
+      </div>
+
+      <!-- SAAS -->
+      <div class="port-card rv d1">
+        <div class="port-prev">
+          <div class="port-prev-inner">
+            <div class="m-saas">
+              <div class="m-saas-nav"><div class="m-saas-logo"></div><div class="m-saas-lt">FlowDesk</div><div class="m-saas-nav-r"><div class="m-saas-nl">Produto</div><div class="m-saas-nl">Preços</div><div class="m-saas-nl" style="color:#a855f7">Entrar</div></div></div>
+              <div class="m-saas-hero">
+                <div class="m-saas-badge">✦ IA integrada</div>
+                <div class="m-saas-h">Gerencie tudo em<br><span>um só lugar</span></div>
+                <div class="m-saas-p">A plataforma que sua equipe precisa para trabalhar com mais eficiência.</div>
+                <div class="m-saas-btns"><div class="m-saas-b1">Começar grátis</div><div class="m-saas-b2">Ver demo</div></div>
+              </div>
+              <div class="m-saas-dash">
+                <div class="m-saas-row">
+                  <div class="m-saas-box"><div class="m-saas-bv" style="background:linear-gradient(135deg,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">2.847</div><div class="m-saas-bl">Usuários ativos</div></div>
+                  <div class="m-saas-box"><div class="m-saas-bv" style="color:#a855f7">+34%</div><div class="m-saas-bl">Crescimento</div></div>
+                  <div class="m-saas-box"><div class="m-saas-bv" style="color:#ec4899">99.9%</div><div class="m-saas-bl">Uptime</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="port-info">
+          <div class="port-info-tags"><span class="port-info-tag">SaaS / Startup</span></div>
+          <div class="port-info-title">Landing Page SaaS</div>
+          <div class="port-info-desc">Página de produto focada em conversão e captação de leads qualificados.</div>
+          <div class="port-price-badge"><span class="from">a partir de</span><span class="price">R$ 1.800</span><span class="arrow">→</span></div>
+        </div>
+        <div class="port-foot"><div><div class="port-fn">SaaS Landing Page</div><div class="port-ft">Tecnologia • Alta Conversão</div></div><a href="#contato" class="port-arr">→</a></div>
+      </div>
+
+      <!-- LANDING PAGE -->
+      <div class="port-card rv d2">
+        <div class="port-prev">
+          <div class="port-prev-inner">
+            <div class="m-land">
+              <div class="m-land-nav"><div class="m-land-logo">APEX CONSULT</div><div class="m-land-cta">CONTATO</div></div>
+              <div class="m-land-hero">
+                <div class="m-land-lbl">Consultoria Empresarial</div>
+                <div class="m-land-h">Resultados que<br>falam por <em>si</em></div>
+                <div class="m-land-p">Mais de 200 empresas transformadas. A sua pode ser a próxima.</div>
+                <div class="m-land-form">
+                  <input class="m-land-inp" placeholder="Seu e-mail" readonly>
+                  <div class="m-land-sub">COMEÇAR</div>
+                </div>
+              </div>
+              <div class="m-land-trust">
+                <div class="m-land-ti"><div class="m-land-tico">✓</div><div class="m-land-tt">200+ clientes</div></div>
+                <div class="m-land-ti"><div class="m-land-tico">⭐</div><div class="m-land-tt">4.9 estrelas</div></div>
+                <div class="m-land-ti"><div class="m-land-tico">🏆</div><div class="m-land-tt">Prêmio 2024</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="port-info">
+          <div class="port-info-tags"><span class="port-info-tag">Landing Page</span></div>
+          <div class="port-info-title">Página de Captura</div>
+          <div class="port-info-desc">Alta conversão para geração de leads e vendas diretas.</div>
+          <div class="port-price-badge"><span class="from">a partir de</span><span class="price">R$ 1.200</span><span class="arrow">→</span></div>
+        </div>
+        <div class="port-foot"><div><div class="port-fn">Landing Page Pro</div><div class="port-ft">Negócios • Geração de Leads</div></div><a href="#contato" class="port-arr">→</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depoimentos" id="depoimentos">
+  <div class="dep-inner">
+    <div class="dep-hdr rv">
+      <div class="sec-label">Quem já contratou</div>
+      <h2 class="sec-title">O que meus clientes<br><em>dizem sobre o trabalho</em></h2>
+      <p>Resultados reais de quem investiu numa presença digital profissional.</p>
+    </div>
+    <div class="dep-grid">
+
+      <div class="dep-card feat-dep rv">
+        <div class="dep-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="dep-text">O Lucas entregou meu e-commerce em <strong>menos de 2 semanas</strong>. Fiquei impressionado com a qualidade do design e como tudo ficou fácil de usar. Nas primeiras semanas já tive retorno do investimento. <strong>Super recomendo!</strong></p>
+        <div class="dep-author">
+          <div class="dep-avatar" style="background:rgba(210,165,80,.1)">👔</div>
+          <div>
+            <div class="dep-name">Rafael Mendes</div>
+            <div class="dep-role">Dono — Loja de Moda Masculina</div>
+            <div class="dep-project">E-Commerce Premium</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card rv d1">
+        <div class="dep-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="dep-text">Meu restaurante precisava de um site à altura. O Lucas criou algo que <strong>representa exatamente a nossa identidade</strong>. As reservas online aumentaram muito desde o lançamento.</p>
+        <div class="dep-author">
+          <div class="dep-avatar" style="background:rgba(122,158,126,.1)">🍝</div>
+          <div>
+            <div class="dep-name">Ana Beatriz Costa</div>
+            <div class="dep-role">Proprietária — Bella Roma</div>
+            <div class="dep-project">Site para Restaurante</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card rv d2">
+        <div class="dep-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="dep-text">Nossa landing page <strong>triplicou a taxa de conversão</strong> em relação ao que tínhamos antes. O Lucas entende de negócios, não só de código. O resultado superou as expectativas.</p>
+        <div class="dep-author">
+          <div class="dep-avatar" style="background:rgba(224,92,42,.1)">🚀</div>
+          <div>
+            <div class="dep-name">Marcelo Figueiredo</div>
+            <div class="dep-role">CEO — Apex Consultoria</div>
+            <div class="dep-project">Landing Page Pro</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card rv d1">
+        <div class="dep-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="dep-text">Contratei para um app de delivery e o resultado foi <strong>melhor do que eu imaginava</strong>. Atendimento rápido, comunicativo e muito profissional. Já estou pensando no próximo projeto com ele.</p>
+        <div class="dep-author">
+          <div class="dep-avatar" style="background:rgba(168,85,247,.1)">📱</div>
+          <div>
+            <div class="dep-name">Juliana Barros</div>
+            <div class="dep-role">Empreendedora — FastDeliver</div>
+            <div class="dep-project">App Mobile</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card rv d2">
+        <div class="dep-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="dep-text">Precisava de um sistema web personalizado e o Lucas entregou com <strong>qualidade impecável</strong>. Prazo cumprido, preço justo e suporte excelente pós-entrega. Nota 10!</p>
+        <div class="dep-author">
+          <div class="dep-avatar" style="background:rgba(210,165,80,.1)">💼</div>
+          <div>
+            <div class="dep-name">Carlos Eduardo Lima</div>
+            <div class="dep-role">Gestor — TechBrasil Ltda.</div>
+            <div class="dep-project">Sistema Web</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card rv d3">
+        <div class="dep-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="dep-text">Meu portfólio online ficou <strong>incrível</strong>. O Lucas captou exatamente o que eu queria transmitir como profissional. Já recebi vários elogios de clientes novos por causa do site.</p>
+        <div class="dep-author">
+          <div class="dep-avatar" style="background:rgba(122,158,126,.1)">🎨</div>
+          <div>
+            <div class="dep-name">Fernanda Oliveira</div>
+            <div class="dep-role">Fotógrafa Profissional</div>
+            <div class="dep-project">Site Institucional</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COUNTER STRIP -->
+<div class="counter-strip">
+  <div class="counter-inner">
+    <div class="counter-item rv"><div class="counter-n">50+</div><div class="counter-l">Projetos entregues</div></div>
+    <div class="counter-item rv d1"><div class="counter-n">100%</div><div class="counter-l">Clientes satisfeitos</div></div>
+    <div class="counter-item rv d2"><div class="counter-n">3+</div><div class="counter-l">Anos de experiência</div></div>
+    <div class="counter-item rv d3"><div class="counter-n">48h</div><div class="counter-l">Tempo de resposta</div></div>
+  </div>
+</div>
+
+<!-- APPS -->
+<section class="apps" id="apps">
+  <div class="apps-inner">
+    <div class="phones rv">
+      <div class="phone tall">
+        <div class="notch"><div class="notch-d"></div></div>
+        <div class="app-s app-fit">
+          <div class="af-top"><div><div class="af-gr">Bom dia 👋</div><div class="af-nm">FitTrack Pro</div></div><div style="width:30px;height:30px;background:rgba(210,165,80,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px">🔔</div></div>
+          <div class="af-ring"><div class="af-ri"><div class="af-pct">70%</div></div></div>
+          <div style="text-align:center;margin-bottom:14px"><div style="font-size:8px;color:#7a5030">Meta diária</div><div style="font-size:10px;color:#f0ddb0;font-weight:700">7.200 / 10.000 passos</div></div>
+          <div class="af-stats">
+            <div class="af-st"><div class="af-sv">542</div><div class="af-sl">kcal</div></div>
+            <div class="af-st"><div class="af-sv">4.2km</div><div class="af-sl">distância</div></div>
+            <div class="af-st"><div class="af-sv">48min</div><div class="af-sl">ativo</div></div>
+            <div class="af-st"><div class="af-sv">72bpm</div><div class="af-sl">batimentos</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone">
+        <div class="notch"><div class="notch-d"></div></div>
+        <div class="app-s app-del">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div style="font-size:11px;font-weight:800;color:#1a1a1a">FastDeliver</div><div style="font-size:16px">🛵</div></div>
+          <div class="ad-map"><div class="ad-pin1"></div><div class="ad-pin2"></div><div style="position:absolute;top:50%;left:32%;right:32%;height:1.5px;background:rgba(122,158,126,.4)"></div></div>
+          <div class="ad-status">● Em rota — 8 min</div>
+          <div class="ad-title">Seu pedido chegando!</div>
+          <div class="ad-items">
+            <div class="ad-i"><div class="ad-ie">🍔</div><div class="ad-in">Burguer</div></div>
+            <div class="ad-i"><div class="ad-ie">🍟</div><div class="ad-in">Batata</div></div>
+            <div class="ad-i"><div class="ad-ie">🥤</div><div class="ad-in">Bebida</div></div>
+          </div>
+          <div class="ad-btn">Rastrear Pedido →</div>
+        </div>
+      </div>
+    </div>
+    <div class="apps-content rv">
+      <div class="sec-label">Desenvolvimento Mobile</div>
+      <h2>Apps que os usuários adoram <em>usar</em></h2>
+      <p>Desenvolvo aplicativos para Android e iOS com foco em performance, design intuitivo e experiência excepcional. Do MVP ao produto final, publicação nas lojas incluída.</p>
+      <div class="tech-pills">
+        <div class="tp"><span class="tp-dot" style="background:var(--gold)"></span>React Native</div>
+        <div class="tp"><span class="tp-dot" style="background:#7c3aed"></span>Flutter</div>
+        <div class="tp"><span class="tp-dot" style="background:var(--ember)"></span>Android Nativo</div>
+        <div class="tp"><span class="tp-dot" style="background:var(--sage)"></span>iOS</div>
+        <div class="tp"><span class="tp-dot" style="background:#f59e0b"></span>Firebase</div>
+        <div class="tp"><span class="tp-dot" style="background:#22c55e"></span>Node.js API</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contato">
+  <div class="contact-inner">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div class="sec-label rv">Vamos conversar</div>
+        <h2 class="rv">Pronto para<br>seu <em>projeto</em>?</h2>
+        <p class="rv">Conta o que você precisa. Respondo rápido e faço um orçamento sem compromisso.</p>
+        <div class="clinks">
+          <a href="https://wa.me/5551983225661" target="_blank" class="clink rv"><div class="clink-ico">💬</div><div><div class="clink-lbl">WhatsApp</div><div class="clink-val">(51) 98322-5661</div></div></a>
+          <a href="https://www.instagram.com/lucas_stanguerlin" target="_blank" class="clink rv d1"><div class="clink-ico">📸</div><div><div class="clink-lbl">Instagram</div><div class="clink-val">@lucas_stanguerlin</div></div></a>
+        </div>
+      </div>
+      <div class="contact-right rv">
+        <h3>Solicitar Orçamento</h3>
+        <div class="fg"><label>Seu Nome</label><input type="text" id="f-nome" placeholder="João Silva"></div>
+        <div class="fg"><label>WhatsApp / E-mail</label><input type="text" id="f-cont" placeholder="(51) 99999-9999"></div>
+        <div class="fg"><label>Tipo de Projeto</label>
+          <select id="f-tipo">
+            <option value="">Selecione...</option>
+            <option>Site Institucional</option>
+            <option>E-Commerce / Loja Virtual</option>
+            <option>Landing Page</option>
+            <option>App Android / iOS</option>
+            <option>Sistema Web</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="fg"><label>Mensagem</label><textarea id="f-msg" placeholder="Descreva seu projeto..."></textarea></div>
+        <button class="fsub" onclick="enviar()">Enviar pelo WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">Lucas Stanguerlin<span>Dev Web & App</span></div>
+  <p>© 2025 Lucas Stanguerlin. Todos os direitos reservados.</p>
+  <div class="fl">
+    <a href="https://wa.me/5551983225661" target="_blank">WhatsApp</a>
+    <a href="https://www.instagram.com/lucas_stanguerlin" target="_blank">Instagram</a>
+  </div>
+</footer>
+
+<script>
+// CURSOR
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.srv-card,.port-card,.clink,.tp,.dep-card,.counter-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.classList.add('h');curR.classList.add('h')});
+  el.addEventListener('mouseleave',()=>{cur.classList.remove('h');curR.classList.remove('h')});
+});
+if('ontouchstart' in window){cur.style.display='none';curR.style.display='none';document.body.style.cursor='auto'}
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on')})},{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// COUNTER ANIMATION
+function animCount(el,target,suffix){
+  let start=0;const dur=1800;const step=target/dur*16;
+  const t=setInterval(()=>{
+    start+=step;
+    if(start>=target){start=target;clearInterval(t)}
+    el.textContent=Math.floor(start)+(suffix||'');
+  },16);
+}
+const countObs=new IntersectionObserver(e=>{
+  e.forEach(x=>{
+    if(x.isIntersecting){
+      const t=parseInt(x.target.dataset.target);
+      if(t)animCount(x.target,t,'+');
+      countObs.unobserve(x.target);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el=>countObs.observe(el));
+
+// HAMBURGER
+const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
+ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open')});
+function closeMob(){ham.classList.remove('open');mob.classList.remove('open')}
+
+// FORM
+function enviar(){
+  const n=document.getElementById('f-nome').value||'Cliente';
+  const c=document.getElementById('f-cont').value||'';
+  const t=document.getElementById('f-tipo').value||'Não especificado';
+  const m=document.getElementById('f-msg').value||'';
+  const txt=`Olá Lucas! Me chamo *${n}*.\n\nInteresse em: *${t}*${c?'\nContato: '+c:''}\n${m?'\n'+m:''}\n\n_Vi seu portfólio._`;
+  window.open(`https://wa.me/5551983225661?text=${encodeURIComponent(txt)}`,'_blank');
+}
+
+// SMOOTH NAV
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t)t.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// PARALLAX ORBS
+document.addEventListener('mousemove',e=>{
+  const x=(e.clientX/window.innerWidth-.5)*24;
+  const y=(e.clientY/window.innerHeight-.5)*24;
+  document.querySelector('.hero-bg-grad')&&(document.querySelector('.hero-bg-grad').style.transform=`translate(${x*.4}px,${y*.4}px)`);
+  const o1=document.querySelector('.orb1'),o2=document.querySelector('.orb2');
+  if(o1)o1.style.transform=`translate(${x*.6}px,${y*.6}px)`;
+  if(o2)o2.style.transform=`translate(${-x*.4}px,${-y*.4}px)`;
+});
+
+// TILT on portfolio cards
+document.querySelectorAll('.port-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const cx=(e.clientX-r.left)/r.width-.5;
+    const cy=(e.clientY-r.top)/r.height-.5;
+    card.style.transform=`translateY(-6px) perspective(800px) rotateY(${cx*4}deg) rotateX(${-cy*3}deg)`;
+  });
+  card.addEventListener('mouseleave',()=>{card.style.transform=''});
+});
+</script>
+</body>
+</html>
