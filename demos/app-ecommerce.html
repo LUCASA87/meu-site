@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>App Loja</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f0fdf4;
+      color: #1e293b;
+      min-height: 100vh;
+      padding: 12px 12px 72px;
+    }
+    .header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px;
+    }
+    .header h1 { font-size: 0.95rem; color: #059669; font-weight: 800; }
+    .badge { background: #ef4444; color: #fff; font-size: 0.6rem; padding: 2px 7px; border-radius: 10px; font-weight: 700; }
+    .banner {
+      background: linear-gradient(135deg, #059669, #34d399);
+      color: #fff;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .products { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .prod {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #d1fae5;
+    }
+    .prod-img {
+      height: 70px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      background: #ecfdf5;
+    }
+    .prod-info { padding: 8px; }
+    .prod-info h3 { font-size: 0.68rem; }
+    .price { color: #059669; font-weight: 800; font-size: 0.75rem; }
+    .cart-bar {
+      position: fixed; bottom: 44px; left: 12px; right: 12px;
+      background: #0f172a; color: #fff;
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.72rem;
+    }
+    .cart-bar button {
+      background: #25d366; border: none; color: #fff;
+      padding: 6px 12px; border-radius: 8px;
+      font-size: 0.65rem; font-weight: 700;
+    }
+    .nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff;
+      border-top: 1px solid #d1fae5;
+      display: flex; justify-content: space-around;
+      padding: 8px 0 10px;
+      font-size: 0.58rem; color: #94a3b8;
+    }
+    .nav b { color: #059669; display: block; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🛍️ Viva Store</h1>
+    <span class="badge">3</span>
+  </div>
+  <div class="banner">🚚 Frete grátis acima de R$ 149</div>
+  <div class="products">
+    <div class="prod">
+      <div class="prod-img">👟</div>
+      <div class="prod-info"><h3>Tênis Runner</h3><div class="price">R$ 199</div></div>
+    </div>
+    <div class="prod">
+      <div class="prod-img">👜</div>
+      <div class="prod-info"><h3>Bolsa Premium</h3><div class="price">R$ 249</div></div>
+    </div>
+    <div class="prod">
+      <div class="prod-img">⌚</div>
+      <div class="prod-info"><h3>Smartwatch</h3><div class="price">R$ 349</div></div>
+    </div>
+    <div class="prod">
+      <div class="prod-img">🎧</div>
+      <div class="prod-info"><h3>Fone BT</h3><div class="price">R$ 89</div></div>
+    </div>
+  </div>
+  <div class="cart-bar">
+    <span>🛒 R$ 537,00</span>
+    <button>Comprar</button>
+  </div>
+  <nav class="nav">
+    <div><b>🏠</b>Loja</div>
+    <div><b>🛒</b>Carrinho</div>
+    <div><b>👤</b>Conta</div>
+  </nav>
+</body>
+</html>

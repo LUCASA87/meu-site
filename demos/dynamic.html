@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal TechNews — Demo Site Dinâmico</title>
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .top-bar {
+      background: #7c3aed;
+      color: #fff;
+      text-align: center;
+      padding: 6px;
+      font-size: 0.8rem;
+    }
+    .hero-post {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 32px;
+      padding: 40px 0;
+      align-items: center;
+    }
+    .hero-post img-placeholder {
+      display: block;
+      background: linear-gradient(135deg, #ede9fe, #c4b5fd);
+      border-radius: 16px;
+      aspect-ratio: 16/10;
+    }
+    .hero-post .tag { color: #7c3aed; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+    .hero-post h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.8rem; margin: 8px 0 12px; line-height: 1.2; }
+    .hero-post p { color: #64748b; margin-bottom: 16px; }
+    .meta { font-size: 0.8rem; color: #94a3b8; }
+    .layout { display: grid; grid-template-columns: 1fr 300px; gap: 32px; padding-bottom: 48px; }
+    .posts { display: flex; flex-direction: column; gap: 20px; }
+    .post-card {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 16px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px;
+      transition: 0.25s;
+    }
+    .post-card:hover { box-shadow: 0 8px 24px rgba(124,58,237,0.1); border-color: #c4b5fd; }
+    .post-thumb {
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+      border-radius: 10px;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    .post-card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .post-card p { font-size: 0.85rem; color: #64748b; }
+    .post-card .cat {
+      display: inline-block;
+      padding: 3px 10px;
+      background: #ede9fe;
+      color: #7c3aed;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    aside .widget {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    aside h4 { font-size: 0.95rem; margin-bottom: 14px; color: #0f172a; }
+    aside a { display: block; padding: 8px 0; color: #64748b; font-size: 0.85rem; border-bottom: 1px solid #f1f5f9; }
+    aside a:hover { color: #7c3aed; }
+    .search-box {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .search-box input {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+    .search-box button {
+      padding: 12px 18px;
+      background: #7c3aed;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .pagination { display: flex; gap: 8px; justify-content: center; padding: 24px 0; }
+    .pagination span {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px; border: 1px solid #e2e8f0;
+      font-size: 0.85rem; cursor: pointer;
+    }
+    .pagination span.active { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+    @media (max-width: 900px) {
+      .hero-post, .layout { grid-template-columns: 1fr; }
+      .post-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-ribbon">Demonstração — Blog / Portal Dinâmico com CMS</div>
+  <div class="top-bar">🔥 Novo: Guia completo de presença digital para 2026</div>
+  <header class="site-header container">
+    <div class="logo" style="color:#7c3aed">TechNews Portal</div>
+    <nav class="site-nav">
+      <a href="#">Início</a>
+      <a href="#">Tecnologia</a>
+      <a href="#">Negócios</a>
+      <a href="#">Tutoriais</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="search-box">
+      <input type="search" placeholder="Buscar artigos, categorias, tags..." />
+      <button>Buscar</button>
+    </div>
+
+    <article class="hero-post">
+      <div style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);border-radius:16px;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;font-size:4rem">📰</div>
+      <div>
+        <span class="tag">Destaque</span>
+        <h1>Como escolher o site ideal para o seu negócio em 2026</h1>
+        <p>Guia completo com tipos de site, investimento, prazos e o que esperar de um bom desenvolvedor.</p>
+        <p class="meta">Por Redação · 01 Jun 2026 · 8 min de leitura</p>
+        <a href="#" class="btn btn-primary" style="margin-top:12px;background:#7c3aed">Ler artigo completo</a>
+      </div>
+    </article>
+
+    <div class="layout">
+      <div>
+        <h2 style="font-size:1.2rem;margin-bottom:20px;color:#0f172a">Últimas publicações</h2>
+        <div class="posts">
+          <article class="post-card">
+            <div class="post-thumb">💼</div>
+            <div><span class="cat">Negócios</span><h3>5 estratégias para vender mais pela internet</h3><p>Dicas práticas que qualquer empresa pode aplicar hoje.</p><p class="meta">28 Mai 2026</p></div>
+          </article>
+          <article class="post-card">
+            <div class="post-thumb">📱</div>
+            <div><span class="cat">Tecnologia</span><h3>Por que ter um app Android além do site</h3><p>Alcance clientes direto na tela do celular com seu próprio APK.</p><p class="meta">22 Mai 2026</p></div>
+          </article>
+          <article class="post-card">
+            <div class="post-thumb">🛒</div>
+            <div><span class="cat">E-commerce</span><h3>Checklist para abrir sua loja virtual</h3><p>Do catálogo ao checkout: tudo que você precisa saber.</p><p class="meta">15 Mai 2026</p></div>
+          </article>
+        </div>
+        <div class="pagination"><span class="active">1</span><span>2</span><span>3</span><span>→</span></div>
+      </div>
+      <aside>
+        <div class="widget">
+          <h4>Categorias</h4>
+          <a href="#">Tecnologia (24)</a>
+          <a href="#">Negócios (18)</a>
+          <a href="#">Marketing (15)</a>
+          <a href="#">Tutoriais (31)</a>
+        </div>
+        <div class="widget">
+          <h4>Mais lidos</h4>
+          <a href="#">SEO para iniciantes</a>
+          <a href="#">WhatsApp Business na prática</a>
+          <a href="#">Design que converte</a>
+        </div>
+        <div class="widget" style="background:#ede9fe;border-color:#c4b5fd">
+          <h4>Newsletter</h4>
+          <p style="font-size:0.85rem;color:#64748b;margin-bottom:12px">Receba conteúdos exclusivos toda semana.</p>
+          <input type="email" placeholder="Seu e-mail" style="width:100%;padding:10px;border-radius:8px;border:1px solid #c4b5fd;margin-bottom:8px" />
+          <button class="btn btn-primary" style="width:100%;background:#7c3aed;font-size:0.85rem">Inscrever-se</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom">© 2026 TechNews Portal — Demo por Lucas Stanguerlin</div>
+  </footer>
+</body>
+</html>

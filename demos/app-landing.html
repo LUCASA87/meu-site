@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>App Landing</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(180deg, #0f172a 0%, #1e3a5f 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 14px 14px 70px;
+    }
+    .top { text-align: center; padding: 20px 0; }
+    .logo {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      border-radius: 14px;
+      margin: 0 auto 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 18px;
+    }
+    h1 { font-size: 1.1rem; }
+    p { font-size: 0.72rem; color: #94a3b8; margin-top: 4px; }
+    .cta {
+      display: block;
+      margin: 20px 0;
+      padding: 14px;
+      background: #25d366;
+      color: #fff;
+      text-align: center;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .cards { display: flex; flex-direction: column; gap: 10px; }
+    .card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(56,189,248,0.25);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex; gap: 12px; align-items: center;
+    }
+    .card span { font-size: 1.4rem; }
+    .card h3 { font-size: 0.8rem; }
+    .card small { color: #94a3b8; font-size: 0.65rem; }
+    .nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #0f172a;
+      border-top: 1px solid #334155;
+      display: flex; justify-content: space-around;
+      padding: 10px 0 14px;
+      font-size: 0.6rem; color: #64748b;
+    }
+    .nav b { color: #38bdf8; display: block; font-size: 1rem; margin-bottom: 2px; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="logo">H</div>
+    <h1>Horizonte Consultoria</h1>
+    <p>Seu parceiro de negócios</p>
+  </div>
+  <a class="cta" href="#">💬 Chamar no WhatsApp</a>
+  <div class="cards">
+    <div class="card"><span>📈</span><div><h3>Marketing Digital</h3><small>Campanhas que convertem</small></div></div>
+    <div class="card"><span>🌐</span><div><h3>Sites Profissionais</h3><small>Presença online completa</small></div></div>
+    <div class="card"><span>🤝</span><div><h3>Consultoria</h3><small>Estratégia personalizada</small></div></div>
+  </div>
+  <nav class="nav">
+    <div><b>🏠</b>Início</div>
+    <div><b>📋</b>Serviços</div>
+    <div><b>💬</b>Contato</div>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Horizonte Consultoria — Demo Landing</title>
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .hero {
+      padding: 72px 0 56px;
+      background: linear-gradient(160deg, #eff6ff 0%, #fff 55%, #f0fdf4 100%);
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: #2563eb; }
+    .hero p { color: #64748b; max-width: 520px; margin: 0 auto 28px; font-size: 1.05rem; }
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .trust { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 36px; color: #64748b; font-size: 0.85rem; }
+    .trust strong { color: #0f172a; display: block; font-size: 1.3rem; }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 48px 0;
+    }
+    .svc {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: 0.25s;
+    }
+    .svc:hover { border-color: #93c5fd; box-shadow: 0 12px 32px rgba(37,99,235,0.1); transform: translateY(-4px); }
+    .svc-icon { font-size: 2rem; margin-bottom: 12px; }
+    .svc h3 { font-size: 1rem; margin-bottom: 8px; color: #0f172a; }
+    .svc p { font-size: 0.85rem; color: #64748b; }
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      padding: 48px 0;
+    }
+    .about-img {
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      border-radius: 20px;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+    .about h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; margin-bottom: 12px; }
+    .about p { color: #64748b; margin-bottom: 16px; font-size: 0.95rem; }
+    .about ul li { padding: 8px 0; color: #475569; font-size: 0.9rem; }
+    .about ul li::before { content: '✓ '; color: #2563eb; font-weight: 700; }
+    .contact {
+      background: #0f172a;
+      color: #fff;
+      padding: 56px 0;
+      border-radius: 24px 24px 0 0;
+      margin-top: 24px;
+    }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .contact h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.6rem; margin-bottom: 12px; }
+    .contact > .container > p { color: #94a3b8; margin-bottom: 32px; }
+    .form input, .form textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      background: #1e293b;
+      color: #fff;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+    .form input::placeholder, .form textarea::placeholder { color: #64748b; }
+    @media (max-width: 768px) {
+      .services, .about, .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-ribbon">Demonstração — Landing Page Institucional</div>
+  <header class="site-header container">
+    <div class="logo">Horizonte Consultoria</div>
+    <nav class="site-nav">
+      <a href="#">Início</a>
+      <a href="#">Serviços</a>
+      <a href="#">Sobre</a>
+      <a href="#">Contato</a>
+      <a href="#" class="btn btn-whatsapp" style="padding:8px 16px;font-size:0.8rem">WhatsApp</a>
+    </nav>
+  </header>
+
+  <section class="hero container">
+    <h1>Consultoria que <span>acelera</span> o crescimento do seu negócio</h1>
+    <p>Estratégia, marketing digital e presença online profissional. Atendimento humano e resultados reais.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn btn-whatsapp">Falar no WhatsApp</a>
+      <a href="#" class="btn btn-outline">Solicitar proposta</a>
+    </div>
+    <div class="trust">
+      <div><strong>150+</strong>clientes atendidos</div>
+      <div><strong>4.9★</strong>avaliação média</div>
+      <div><strong>24h</strong>resposta garantida</div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="section-head">
+      <h2 class="section-title">Nossos serviços</h2>
+      <p class="section-sub">Soluções práticas para você vender mais e se destacar no mercado.</p>
+    </div>
+    <div class="services">
+      <div class="svc"><div class="svc-icon">📈</div><h3>Marketing Digital</h3><p>Campanhas, redes sociais e tráfego pago com foco em ROI.</p></div>
+      <div class="svc"><div class="svc-icon">🌐</div><h3>Sites & Landing Pages</h3><p>Páginas rápidas, bonitas e prontas para converter visitantes.</p></div>
+      <div class="svc"><div class="svc-icon">🤝</div><h3>Consultoria</h3><p>Planejamento estratégico personalizado para seu segmento.</p></div>
+    </div>
+  </section>
+
+  <section class="container about">
+    <div class="about-img">🏢</div>
+    <div>
+      <h2>Por que escolher a Horizonte?</h2>
+      <p>Há mais de 8 anos ajudamos empresas de todos os portes a crescer com presença digital forte e atendimento próximo.</p>
+      <ul>
+        <li>Equipe dedicada e comunicação clara</li>
+        <li>Projetos entregues no prazo combinado</li>
+        <li>Suporte contínuo após a entrega</li>
+        <li>Investimento justo e transparente</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="container contact-grid">
+      <div>
+        <h2>Vamos conversar?</h2>
+        <p style="color:#94a3b8">Preencha o formulário ou chame direto no WhatsApp. Respondemos em até 24 horas.</p>
+        <p style="margin-top:20px">📍 Porto Alegre, RS<br>📱 (51) 99999-0000<br>✉️ contato@horizonte.com.br</p>
+      </div>
+      <form class="form">
+        <input type="text" placeholder="Seu nome completo" />
+        <input type="tel" placeholder="WhatsApp com DDD" />
+        <textarea rows="4" placeholder="Como podemos ajudar?"></textarea>
+        <button type="button" class="btn btn-primary" style="width:100%">Enviar mensagem</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div><h4>Horizonte Consultoria</h4><p>Transformando ideias em resultados digitais.</p></div>
+      <div><h4>Links</h4><a href="#">Serviços</a><a href="#">Sobre</a><a href="#">Contato</a></div>
+      <div><h4>Redes</h4><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">WhatsApp</a></div>
+    </div>
+    <div class="container footer-bottom">© 2026 Horizonte Consultoria — Demo por Lucas Stanguerlin</div>
+  </footer>
+</body>
+</html>

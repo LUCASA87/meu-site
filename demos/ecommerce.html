@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Viva Store — Demo E-commerce</title>
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .promo { background: #059669; color: #fff; text-align: center; padding: 8px; font-size: 0.85rem; font-weight: 500; }
+    .hero-shop {
+      background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+      padding: 48px 0;
+      text-align: center;
+    }
+    .hero-shop h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2rem; color: #065f46; margin-bottom: 8px; }
+    .hero-shop p { color: #047857; }
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 24px 0;
+    }
+    .filters button {
+      padding: 8px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 50px;
+      background: #fff;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .filters button.active, .filters button:hover {
+      background: #059669;
+      color: #fff;
+      border-color: #059669;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding-bottom: 48px;
+    }
+    .product {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+    .product:hover { box-shadow: 0 12px 32px rgba(5,150,105,0.12); transform: translateY(-4px); }
+    .product-img {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      background: #f8fafc;
+      position: relative;
+    }
+    .product-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    .product-info { padding: 16px; }
+    .product-info h3 { font-size: 0.95rem; margin-bottom: 4px; }
+    .stars { color: #fbbf24; font-size: 0.75rem; margin-bottom: 8px; }
+    .price { font-size: 1.15rem; font-weight: 800; color: #059669; }
+    .old { font-size: 0.8rem; color: #94a3b8; text-decoration: line-through; }
+    .add {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      background: #059669;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .add:hover { background: #047857; }
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 40px 0;
+      border-top: 1px solid #e2e8f0;
+    }
+    .benefit { text-align: center; padding: 16px; }
+    .benefit span { font-size: 1.8rem; }
+    .benefit h4 { font-size: 0.9rem; margin: 8px 0 4px; }
+    .benefit p { font-size: 0.8rem; color: #64748b; }
+    .cart-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #0f172a;
+      color: #fff;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    }
+    .cart-bar button {
+      padding: 10px 24px;
+      background: #25d366;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .header-cart {
+      position: relative;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+    .header-cart .count {
+      position: absolute;
+      top: -6px; right: -8px;
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.65rem;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    body { padding-bottom: 60px; }
+    .toast {
+      position: fixed;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #059669;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      opacity: 0;
+      transition: 0.3s;
+      z-index: 200;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    @media (max-width: 900px) { .products { grid-template-columns: repeat(2, 1fr); } .benefits { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .products { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="demo-ribbon">Demonstração — Loja Virtual / E-commerce Completo</div>
+  <div class="promo">🚚 Frete grátis acima de R$ 149 · 💳 Pix com 5% de desconto · 🔒 Compra 100% segura</div>
+  <header class="site-header container">
+    <div class="logo" style="color:#059669">🛍️ Viva Store</div>
+    <nav class="site-nav">
+      <a href="#">Início</a>
+      <a href="#">Produtos</a>
+      <a href="#">Ofertas</a>
+      <a href="#">Minha conta</a>
+      <span class="header-cart" id="header-cart">🛒<span class="count" id="count">0</span></span>
+    </nav>
+  </header>
+
+  <section class="hero-shop">
+    <div class="container">
+      <h1>Moda & Lifestyle com até 40% off</h1>
+      <p>Mais de 200 produtos com entrega rápida para todo o Brasil</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="filters">
+      <button class="active">Todos</button>
+      <button>Roupas</button>
+      <button>Calçados</button>
+      <button>Acessórios</button>
+      <button>Eletrônicos</button>
+    </div>
+
+    <div class="products">
+      <div class="product">
+        <div class="product-img">👟<span class="product-badge">-33%</span></div>
+        <div class="product-info">
+          <h3>Tênis Runner Pro</h3>
+          <div class="stars">★★★★★ (128)</div>
+          <div class="old">R$ 299,90</div>
+          <div class="price">R$ 199,90</div>
+          <button class="add" onclick="addCart(199)">Adicionar ao carrinho</button>
+        </div>
+      </div>
+      <div class="product">
+        <div class="product-img">👜</div>
+        <div class="product-info">
+          <h3>Bolsa Couro Premium</h3>
+          <div class="stars">★★★★☆ (84)</div>
+          <div class="price">R$ 249,90</div>
+          <button class="add" onclick="addCart(249)">Adicionar ao carrinho</button>
+        </div>
+      </div>
+      <div class="product">
+        <div class="product-img">⌚<span class="product-badge">Novo</span></div>
+        <div class="product-info">
+          <h3>Smartwatch Fit</h3>
+          <div class="stars">★★★★★ (56)</div>
+          <div class="price">R$ 349,90</div>
+          <button class="add" onclick="addCart(349)">Adicionar ao carrinho</button>
+        </div>
+      </div>
+      <div class="product">
+        <div class="product-img">🎧</div>
+        <div class="product-info">
+          <h3>Fone Bluetooth ANC</h3>
+          <div class="stars">★★★★★ (203)</div>
+          <div class="old">R$ 129,90</div>
+          <div class="price">R$ 89,90</div>
+          <button class="add" onclick="addCart(89)">Adicionar ao carrinho</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="benefits">
+      <div class="benefit"><span>🚚</span><h4>Entrega rápida</h4><p>Enviamos em até 48h</p></div>
+      <div class="benefit"><span>↩️</span><h4>Troca fácil</h4><p>30 dias para trocar</p></div>
+      <div class="benefit"><span>🔒</span><h4>Pagamento seguro</h4><p>Pix, cartão e boleto</p></div>
+      <div class="benefit"><span>💬</span><h4>Suporte humano</h4><p>WhatsApp direto</p></div>
+    </div>
+  </div>
+
+  <div class="cart-bar">
+    <span>🛒 <strong id="items">0</strong> itens · Total: <strong id="total">R$ 0,00</strong></span>
+    <button>Finalizar compra</button>
+  </div>
+  <div class="toast" id="toast">✓ Produto adicionado!</div>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div><h4>Viva Store</h4><p>Sua loja online completa, segura e pronta para vender 24h.</p></div>
+      <div><h4>Atendimento</h4><a href="#">Central de ajuda</a><a href="#">Trocas</a><a href="#">Rastreio</a></div>
+      <div><h4>Pagamento</h4><a href="#">Pix</a><a href="#">Cartão</a><a href="#">Boleto</a></div>
+    </div>
+    <div class="container footer-bottom">© 2026 Viva Store — Demo por Lucas Stanguerlin</div>
+  </footer>
+
+  <script>
+    let n = 0, t = 0;
+    function addCart(v) {
+      n++; t += v;
+      document.getElementById('count').textContent = n;
+      document.getElementById('items').textContent = n;
+      document.getElementById('total').textContent = 'R$ ' + t.toFixed(2).replace('.', ',');
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+  </script>
+</body>
+</html>

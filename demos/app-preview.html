@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>App Preview</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f0fdf4;
+      min-height: 100vh;
+      padding: 12px;
+    }
+    .status { height: 22px; }
+    .app-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 4px 16px;
+    }
+    .app-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1d4ed8, #38bdf8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .app-header h1 { font-size: 1rem; color: #0f172a; }
+    .app-header p { font-size: 0.7rem; color: #64748b; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .stat {
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .stat strong { display: block; font-size: 1.1rem; color: #2563eb; }
+    .stat span { font-size: 0.65rem; color: #64748b; }
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card h3 { font-size: 0.85rem; color: #0f172a; }
+    .card p { font-size: 0.7rem; color: #94a3b8; margin-top: 2px; }
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: #dcfce7;
+      color: #16a34a;
+    }
+    .badge.off { background: #fee2e2; color: #dc2626; }
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 16px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #25d366;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+    }
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 14px;
+      font-size: 0.65rem;
+      color: #94a3b8;
+    }
+    .nav-bar span.active { color: #2563eb; font-weight: 600; }
+    .content { padding-bottom: 70px; }
+  </style>
+</head>
+<body>
+  <div class="status"></div>
+  <div class="content">
+    <div class="app-header">
+      <div class="app-logo">LS</div>
+      <div>
+        <h1>Seu Negócio App</h1>
+        <p>Painel no celular · APK Android</p>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>12</strong><span>Sites</span></div>
+      <div class="stat"><strong>10</strong><span>Online</span></div>
+      <div class="stat"><strong>2</strong><span>Alertas</span></div>
+    </div>
+    <div class="card">
+      <div><h3>Loja Principal</h3><p>loja.cliente.com.br</p></div>
+      <span class="badge">Online</span>
+    </div>
+    <div class="card">
+      <div><h3>Blog & Notícias</h3><p>blog.cliente.com.br</p></div>
+      <span class="badge">Online</span>
+    </div>
+    <div class="card">
+      <div><h3>Landing Promo</h3><p>promo.cliente.com.br</p></div>
+      <span class="badge off">Offline</span>
+    </div>
+  </div>
+  <div class="fab">💬</div>
+  <nav class="nav-bar">
+    <span class="active">🏠 Início</span>
+    <span>📊 Painel</span>
+    <span>⚙️ Config</span>
+  </nav>
+</body>
+</html>
