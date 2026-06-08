@@ -1,5 +1,9 @@
 const WHATSAPP = '5551983225661';
 
+function asset(path) {
+  return typeof window.resolveAsset === 'function' ? window.resolveAsset(path) : path;
+}
+
 const demoData = {
   landing: {
     src: 'demos/landing.html',
@@ -71,10 +75,10 @@ function switchDemo(key) {
   };
 
   frames.browser.forEach((el) => {
-    if (el) el.src = data.src;
+    if (el) el.src = asset(data.src);
   });
   frames.app.forEach((el) => {
-    if (el) el.src = data.appSrc;
+    if (el) el.src = asset(data.appSrc);
   });
 
   const demoUrl = document.getElementById('demo-url');
@@ -93,8 +97,8 @@ function switchDemo(key) {
       <h4>${data.title}</h4>
       <p>${data.desc}</p>
       <div class="demo-info-actions">
-        <a href="${data.src}" target="_blank" class="btn btn-outline btn-sm">Abrir site demo</a>
-        <a href="${data.appSrc}" target="_blank" class="btn btn-outline btn-sm">Abrir app demo</a>
+        <a href="${asset(data.src)}" target="_blank" class="btn btn-outline btn-sm">Abrir site demo</a>
+        <a href="${asset(data.appSrc)}" target="_blank" class="btn btn-outline btn-sm">Abrir app demo</a>
         <button class="btn btn-primary open-modal-btn" data-service="${data.service}" data-tier="${data.tier}" data-range="${data.range}">
           Quero este modelo
         </button>
